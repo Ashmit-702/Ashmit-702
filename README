@@ -1,0 +1,71 @@
+# Hi, I'm Ashmit Vijay Singh 👋
+
+🎓 Computer Engineering Student @ SSJCET, Mumbai University  
+🔭 Building AI-powered backends with Python, Flask, FastAPI & LLMs  
+🌱 Currently exploring LLM pipelines, NLP, and cloud deployments  
+📫 Reach me at **ashmitsingh702@gmail.com**  
+🌐 [Portfolio](https://ashmit-702.github.io/portfolio/) • [LinkedIn](https://www.linkedin.com/in/ashmitvsingh/)
+
+---
+
+## 📊 GitHub Analytics
+
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Ashmit-702&theme=radical&hide_border=true" width="49%" />
+  <img src="https://github-readme-stats.vercel.app/api?username=Ashmit-702&show_icons=true&theme=radical&hide_border=true&count_private=true" width="49%" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=Ashmit-702&theme=react-dark&hide_border=true&area=true" width="100%" />
+</p>
+
+---
+
+## 🛠️ Tech Stack & Tools
+
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=python,java,c,django,tensorflow,redux,js,html,css,mysql,mongodb,git&theme=dark" />
+</p>
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=github,vscode,linux,docker,figma,flask,fastapi,postgres,aws,render&theme=dark" />
+</p>
+
+---
+
+## 🚀 Highlighted Projects
+
+### 🔬 [ASHLYSIS — AI Exam Intelligence Platform](https://ashlysis.onrender.com)
+> Python • Flask • Gemini API • TF-IDF • PyMuPDF • Render
+
+- NLP pipeline with ~95% topic-detection accuracy across uploaded exam PDFs
+- Gemini LLM generates personalised study plans in under 5s
+- Flask backend with PyMuPDF OCR for structured multi-page PDF extraction
+
+### 📈 [SentiFi — AI Market Sentiment Analyzer](https://stockfi-uq2v.onrender.com/dashboard/)
+> Python • FastAPI • NLP • PostgreSQL • Render
+
+- BUY/HOLD/SELL signals across 500+ equity tickers with sub-5s response time
+- Batch NLP pipeline processing 500+ articles/day with historical signal replay
+- Interactive dashboard visualising sentiment trends and confidence scores
+
+### 🏥 [Dadi Ki Dawai — AI Healthcare Assistant](https://dadi-healthchat.onrender.com/)
+> Python • Flask • Groq LLM • REST API • JavaScript • PWA • Render
+
+- Handles 20+ symptom categories with context-aware multi-turn conversations
+- Health report generation, conversation history & session management via REST APIs
+- Deployed as a PWA — no app-store install needed
+
+---
+
+## 🏅 Certifications
+
+- 🟡 Honeywell AI Certificate  
+- ☁️ AWS Academy Graduate — Cloud Foundations  
+- 🤖 AI-ML Virtual Internship — Google Developers × AICTE  
+- 📊 Data Science Master Internship — Altair × AICTE  
+
+---
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=Ashmit-702&color=blueviolet&style=flat-square&label=Profile+Views" />
+</p>
