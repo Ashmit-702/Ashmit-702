@@ -3,72 +3,53 @@
 🎓 Computer Engineering Student @ SSJCET, Mumbai University  
 🔭 Building AI-powered backends with Python, Flask, FastAPI & LLMs  
 🌱 Currently exploring LLM pipelines, NLP, and cloud deployments  
-📫 **ashmitsingh702@gmail.com**  
-🌐 [Portfolio](https://ashmit-702.github.io/portfolio/) &nbsp;•&nbsp; [LinkedIn](https://www.linkedin.com/in/ashmitvsingh/) &nbsp;•&nbsp; [GitHub](https://github.com/Ashmit-702)
+📫 ashmitsingh702@gmail.com  
+🌐 [Portfolio](https://ashmit-702.github.io/portfolio/) | [LinkedIn](https://www.linkedin.com/in/ashmitvsingh/) | [GitHub](https://github.com/Ashmit-702)
 
 ---
 
 ## 📊 GitHub Analytics
 
-<div align="center">
+![Streak](https://streak-stats.demolab.com?user=Ashmit-702&theme=radical&hide_border=true)
 
-<img src="https://streak-stats.demolab.com?user=Ashmit-702&theme=radical&hide_border=true" height="165" />
-&nbsp;
-<img src="https://github-readme-stats.vercel.app/api?username=Ashmit-702&show_icons=true&theme=radical&hide_border=true&count_private=true" height="165" />
+![Stats](https://github-readme-stats.vercel.app/api?username=Ashmit-702&show_icons=true&theme=radical&hide_border=true&count_private=true)
 
-</div>
-
-<div align="center">
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Ashmit-702&theme=react-dark&hide_border=true&area=true" width="95%" />
-
-</div>
+![Graph](https://github-readme-activity-graph.vercel.app/graph?username=Ashmit-702&theme=react-dark&hide_border=true&area=true)
 
 ---
 
-## 🛠️ Tech Stack & Tools
+## 🛠️ Tech Stack
 
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=python,java,c,django,tensorflow,flask,fastapi,js,html,css,postgres,mysql,mongodb,aws,docker,git,github,vscode,linux,figma&theme=dark" />
-
-</div>
+![Skills](https://skillicons.dev/icons?i=python,flask,fastapi,js,html,css,postgres,mongodb,aws,docker,git,vscode&theme=dark)
 
 ---
 
-## 🚀 Highlighted Projects
+## 🚀 Projects
 
-### 🔬 [ASHLYSIS — AI Exam Intelligence Platform](https://ashlysis.onrender.com)
-`Python` `Flask` `Gemini API` `TF-IDF` `PyMuPDF` `Render`
-- NLP pipeline achieving ~95% topic-detection accuracy across uploaded exam PDFs
-- Gemini LLM generates personalised study plans from documents in under 5s
-- Flask backend with PyMuPDF OCR for structured multi-page PDF extraction
+### 🔬 [ASHLYSIS - AI Exam Intelligence Platform](https://ashlysis.onrender.com)
+`Python` `Flask` `Gemini API` `TF-IDF` `PyMuPDF`
+- NLP pipeline with ~95% topic-detection accuracy across exam PDFs
+- Gemini LLM generates personalised study plans in under 5s
 
-### 📈 [SentiFi — AI Market Sentiment Analyzer](https://stockfi-uq2v.onrender.com/dashboard/)
-`Python` `FastAPI` `NLP` `PostgreSQL` `Render`
-- BUY/HOLD/SELL signals across 500+ equity tickers with sub-5s response time
-- Batch NLP pipeline processing 500+ articles/day with historical signal replay
-- Interactive dashboard visualising sentiment trends and confidence scores
+### 📈 [SentiFi - AI Market Sentiment Analyzer](https://stockfi-uq2v.onrender.com/dashboard/)
+`Python` `FastAPI` `NLP` `PostgreSQL`
+- BUY/HOLD/SELL signals across 500+ tickers with sub-5s response time
+- Batch NLP pipeline processing 500+ articles/day
 
-### 🏥 [Dadi Ki Dawai — AI Healthcare Assistant](https://dadi-healthchat.onrender.com/)
-`Python` `Flask` `Groq LLM` `REST API` `JavaScript` `PWA` `Render`
-- Handles 20+ symptom categories with context-aware multi-turn conversations
-- Health report generation, conversation history & session management via REST APIs
-- Deployed as a PWA — no app-store install needed
+### 🏥 [Dadi Ki Dawai - AI Healthcare Assistant](https://dadi-healthchat.onrender.com/)
+`Python` `Flask` `Groq LLM` `PWA`
+- 20+ symptom categories, multi-turn conversations under 3s
+- Deployed as PWA — no app-store install needed
 
 ---
 
 ## 🏅 Certifications
 
-- 🟡 Honeywell AI Certificate
-- ☁️ AWS Academy Graduate — Cloud Foundations
-- 🤖 AI-ML Virtual Internship — Google Developers × AICTE
-- 📊 Data Science Master Internship — Altair × AICTE
+- Honeywell AI Certificate
+- AWS Academy Graduate — Cloud Foundations
+- AI-ML Virtual Internship — Google Developers x AICTE
+- Data Science Master Internship — Altair x AICTE
 
 ---
 
-<div align="center">
-
-![Profile Views](https://komarev.com/ghpvc/?username=Ashmit-702&color=blueviolet&style=flat-square&label=Profile+Views)
-
-</div>
+![Views](https://komarev.com/ghpvc/?username=Ashmit-702&color=blueviolet&style=flat-square&label=Profile+Views)
