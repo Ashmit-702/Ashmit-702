@@ -10,9 +10,9 @@
 
 ## 📊 GitHub Analytics
 
-![Streak](https://streak-stats.demolab.com?user=Ashmit-702&theme=radical&hide_border=true)
+![Stats](https://github-readme-stats.vercel.app/api?username=Ashmit-702&show_icons=true&theme=radical&hide_border=true&count_private=true&rank_icon=github)
 
-![Stats](https://github-readme-stats.vercel.app/api?username=Ashmit-702&show_icons=true&theme=radical&hide_border=true&count_private=true)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Ashmit-702&layout=compact&theme=radical&hide_border=true)
 
 ![Graph](https://github-readme-activity-graph.vercel.app/graph?username=Ashmit-702&theme=react-dark&hide_border=true&area=true)
 
@@ -45,10 +45,10 @@
 
 ## 🏅 Certifications
 
-- Honeywell AI Certificate
-- AWS Academy Graduate — Cloud Foundations
-- AI-ML Virtual Internship — Google Developers x AICTE
-- Data Science Master Internship — Altair x AICTE
+- Honeywell AI Certificate  
+- AWS Academy Graduate — Cloud Foundations  
+- AI-ML Virtual Internship — Google Developers x AICTE  
+- Data Science Master Internship — Altair x AICTE  
 
 ---
 
