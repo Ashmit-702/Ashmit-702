@@ -1,0 +1,31 @@
+name: Build Pulse
+
+on:
+  schedule:
+    - cron: "15 */12 * * *"   # twice a day
+  workflow_dispatch:           # run manually from the Actions tab
+  push:
+    branches: [main]
+    paths: ["scripts/build_pulse.py"]
+
+permissions:
+  contents: write
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate Build Pulse from real contribution data
+        run: python scripts/build_pulse.py "${{ github.repository_owner }}"
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/Build-pulse.svg
+          git diff --cached --quiet || git commit -m "chore: refresh Build Pulse"
+          git push
