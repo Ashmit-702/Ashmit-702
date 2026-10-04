@@ -1,15 +1,38 @@
+# ──────────────────────────────────────────────────────────────────────────
+# BUILD PULSE: keeps assets/Build-pulse.svg in sync with real GitHub activity.
+#
+#   GitHub Actions (this file, self-contained: no other script needed)
+#     -> fetch PUBLIC contribution data for the repository owner
+#          1) GitHub GraphQL API using the workflow's built-in GITHUB_TOKEN
+#             (not a personal access token; it expires after each run)
+#          2) fallback: the public contribution calendar behind every profile
+#     -> render the orbital SVG (streak, last 30 days, longest streak)
+#     -> commit assets/Build-pulse.svg only if it changed
+#     -> README shows the refreshed image
+#
+# It never invents numbers: if no real data can be fetched, the run FAILS
+# (red X in the Actions tab) instead of drawing a fake pulse.
+#
+# Runs: every 6 hours, on manual "Run workflow", and whenever this file changes.
+# One-time setup: Settings > Actions > General > Workflow permissions
+#                 > "Read and write permissions".
+# ──────────────────────────────────────────────────────────────────────────
 name: Build Pulse
 
 on:
   schedule:
-    - cron: "15 */12 * * *"   # twice a day
-  workflow_dispatch:           # run manually from the Actions tab
+    - cron: "20 */6 * * *"
+  workflow_dispatch:
   push:
     branches: [main]
-    paths: ["scripts/build_pulse.py"]
+    paths: [".github/workflows/build-pulse.yml"]
 
 permissions:
   contents: write
+
+concurrency:
+  group: build-pulse
+  cancel-in-progress: false
 
 jobs:
   pulse:
@@ -17,15 +40,179 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Regenerate Build Pulse from real contribution data
-        run: python scripts/build_pulse.py "${{ github.repository_owner }}"
-      - name: Commit if changed
+
+      - name: Generate Build Pulse from real contribution data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULSE_USER: ${{ github.repository_owner }}
+        run: |
+          python3 - <<'PY'
+          import os, re, sys, json, math, time, datetime as dt, urllib.request
+
+          USER = os.environ.get("PULSE_USER") or "Ashmit-702"
+          TOKEN = os.environ.get("GITHUB_TOKEN", "")
+          OUT = "assets/Build-pulse.svg"
+          SANS = "-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Helvetica,Arial,sans-serif"
+          MONO = "'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace"
+          LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2, "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
+
+          def normalise_graphql(j):
+              weeks = j["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
+              return {d["date"]: (d["contributionCount"], LEVELS.get(d["contributionLevel"], 0))
+                      for w in weeks for d in w["contributionDays"]}
+
+          def from_graphql():
+              now = dt.datetime.now(dt.timezone.utc)
+              start = (now - dt.timedelta(days=364)).replace(hour=0, minute=0, second=0, microsecond=0)
+              q = ("query($login:String!,$from:DateTime!,$to:DateTime!){user(login:$login){contributionsCollection("
+                   "from:$from,to:$to){contributionCalendar{weeks{contributionDays{date contributionCount contributionLevel}}}}}}")
+              body = json.dumps({"query": q, "variables": {"login": USER,
+                                 "from": start.strftime("%Y-%m-%dT%H:%M:%SZ"), "to": now.strftime("%Y-%m-%dT%H:%M:%SZ")}}).encode()
+              req = urllib.request.Request("https://api.github.com/graphql", data=body, headers={
+                  "Authorization": "bearer " + TOKEN, "Content-Type": "application/json", "User-Agent": "build-pulse"})
+              return normalise_graphql(json.load(urllib.request.urlopen(req, timeout=30)))
+
+          def from_calendar():
+              last = None
+              for _ in range(3):
+                  try:
+                      req = urllib.request.Request(f"https://github.com/users/{USER}/contributions",
+                                                   headers={"User-Agent": "build-pulse", "Accept": "text/html"})
+                      html = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+                      cells = re.findall(r'<td[^>]*data-date="(\d{4}-\d\d-\d\d)"[^>]*id="([^"]+)"[^>]*data-level="(\d)"', html)
+                      tips = dict(re.findall(r'<tool-tip[^>]*for="([^"]+)"[^>]*>([^<]+)</tool-tip>', html))
+                      data = {}
+                      for d, i, lv in cells:
+                          m = re.match(r"(\d+) contribution", tips.get(i, ""))
+                          data[d] = (int(m.group(1)) if m else 0, int(lv))
+                      if data:
+                          return data
+                      last = "calendar page contained no days"
+                  except Exception as e:
+                      last = e
+                  time.sleep(3)
+              raise RuntimeError(f"calendar fetch failed: {last}")
+
+          def load():
+              if TOKEN:
+                  try:
+                      data = from_graphql()
+                      if data:
+                          print("source: GitHub GraphQL API (workflow GITHUB_TOKEN, public data)")
+                          return data
+                  except Exception as e:
+                      print(f"GraphQL unavailable ({e}); falling back to the public calendar")
+              data = from_calendar()
+              print("source: public contribution calendar")
+              return data
+
+          def render(data):
+              utc_today = dt.datetime.now(dt.timezone.utc).date()
+              days = [d for d in sorted(data) if dt.date.fromisoformat(d) <= utc_today]
+              today = dt.date.fromisoformat(days[-1])
+              cnt = lambda d: data.get(d.isoformat(), (0, 0))[0]
+              lvl = lambda d: data.get(d.isoformat(), (0, 0))[1]
+              d = today if cnt(today) else today - dt.timedelta(1)
+              cur = 0
+              while cnt(d) > 0:
+                  cur += 1; d -= dt.timedelta(1)
+              best = run = 0
+              for k in days:
+                  run = run + 1 if data[k][0] > 0 else 0
+                  best = max(best, run)
+              N = 30
+              last = [today - dt.timedelta(N - 1 - i) for i in range(N)]
+              active = [cnt(x) > 0 for x in last]
+              n_active = sum(active)
+              weeks = []
+              for w in range(12):
+                  end = today - dt.timedelta(7 * (11 - w))
+                  weeks.append(sum(cnt(end - dt.timedelta(k)) for k in range(7)))
+              wmax = max(weeks) or 1
+              CX, CY, R1, R2 = 214, 210, 118, 160
+              ang = lambda i: math.radians(-90 + i * 360 / N)
+              pt = lambda i, r=R1: (CX + r * math.cos(ang(i)), CY + r * math.sin(ang(i)))
+              parts = []
+              for w, tot in enumerate(weeks):
+                  a0 = math.radians(-90 + w * 30 + 3); a1 = math.radians(-90 + (w + 1) * 30 - 3)
+                  x0, y0 = CX + R2 * math.cos(a0), CY + R2 * math.sin(a0)
+                  x1, y1 = CX + R2 * math.cos(a1), CY + R2 * math.sin(a1)
+                  op = 0.12 + 0.7 * (tot / wmax) if tot else 0.07
+                  parts.append(f'<path d="M{x0:.1f} {y0:.1f} A{R2} {R2} 0 0 1 {x1:.1f} {y1:.1f}" fill="none" stroke="#7fb2ff" stroke-width="3" stroke-linecap="round" stroke-opacity="{op:.2f}"/>')
+              parts.append(f'<circle cx="{CX}" cy="{CY}" r="{R1}" fill="none" stroke="#fff" stroke-opacity=".06"/>')
+              for i in range(N - 1):
+                  if active[i] and active[i + 1]:
+                      x0, y0 = pt(i); x1, y1 = pt(i + 1)
+                      in_cur = cur > 0 and i >= N - cur
+                      style = 'stroke="#9fe9ff" stroke-width="3.2" class="cur"' if in_cur else 'stroke="#7f93ff" stroke-width="2" stroke-opacity=".7"'
+                      parts.append(f'<path d="M{x0:.1f} {y0:.1f} A{R1} {R1} 0 0 1 {x1:.1f} {y1:.1f}" fill="none" stroke-linecap="round" {style}/>')
+              for i, x in enumerate(last):
+                  px, py = pt(i)
+                  if active[i]:
+                      in_cur = cur > 0 and i >= N - cur
+                      parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{3.6 + lvl(x) * 0.9:.1f}" fill="{"#d9f6ff" if in_cur else "#aab6ff"}"/>')
+                  else:
+                      parts.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="2.2" fill="#4a5080" fill-opacity=".7"/>')
+              tx, ty = pt(N - 1)
+              parts.append(f'<circle cx="{tx:.1f}" cy="{ty:.1f}" r="7" fill="none" stroke="#9fe9ff" class="ping"/>')
+              seg, updated = f"{cur:02d}", today.isoformat()
+              svg = f'''<svg width="800" height="420" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Build Pulse: current streak {cur} days, {n_active} active days in the last 30, longest streak {best} days. Public contributions, updated {updated}.">
+          <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a1224"/><stop offset="1" stop-color="#0f1838"/></linearGradient>
+          <radialGradient id="g1" cx=".27" cy=".5" r=".5"><stop offset="0" stop-color="#4fd1c5" stop-opacity=".16"/><stop offset="1" stop-color="#4fd1c5" stop-opacity="0"/></radialGradient>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+          <clipPath id="card"><rect width="800" height="420" rx="24"/></clipPath>
+          </defs>
+          <style>
+          .cur{{stroke-dasharray:6 8;animation:flow 3.2s linear infinite}}
+          @keyframes flow{{to{{stroke-dashoffset:-56}}}}
+          .ping{{animation:ping 3.4s ease-out infinite;transform-origin:{tx:.1f}px {ty:.1f}px}}
+          @keyframes ping{{0%{{transform:scale(.8);opacity:.9}}100%{{transform:scale(3);opacity:0}}}}
+          .orb{{transform-origin:{CX}px {CY}px;animation:orb 90s linear infinite}}
+          @keyframes orb{{to{{transform:rotate(360deg)}}}}
+          .fade{{animation:fade 1.4s ease-out both}}
+          @keyframes fade{{from{{opacity:0;transform:translateY(8px)}}to{{opacity:1;transform:none}}}}
+          </style>
+          <g clip-path="url(#card)"><rect width="800" height="420" fill="url(#bg)"/><rect width="800" height="420" fill="url(#g1)"/><rect width="800" height="420" fill="url(#grid)"/></g>
+          <rect x=".5" y=".5" width="799" height="419" rx="23.5" fill="none" stroke="#2a3050"/>
+          <circle class="orb" cx="{CX}" cy="{CY}" r="190" fill="none" stroke="#9fe9ff" stroke-opacity=".16" stroke-dasharray="2 12"/>
+          {''.join(parts)}
+          <text x="{CX}" y="{CY+14}" text-anchor="middle" font-family="{SANS}" font-size="76" font-weight="500" letter-spacing="-2" fill="#f4f6ff">{seg}</text>
+          <text x="{CX}" y="{CY+40}" text-anchor="middle" font-family="{MONO}" font-size="11.5" letter-spacing="3" fill="#8fa0c8">DAY STREAK</text>
+          <g class="fade">
+          <text x="470" y="96" font-family="{MONO}" font-size="12.5" letter-spacing="3.4" fill="#4fd1c5">BUILD PULSE</text>
+          <text x="468" y="142" font-family="{SANS}" font-size="34" font-weight="650" letter-spacing="-.8" fill="#f3f5ff">Build continuity</text>
+          <text x="470" y="204" font-family="{MONO}" font-size="11.5" letter-spacing="2.4" fill="#7f8bb4">ACTIVE DAYS · LAST 30</text>
+          <text x="468" y="248" font-family="{SANS}" font-size="44" font-weight="600" fill="#f3f5ff">{n_active}<tspan font-size="20" fill="#7f8bb4" font-weight="400"> / 30</tspan></text>
+          <text x="470" y="290" font-family="{MONO}" font-size="11.5" letter-spacing="2.4" fill="#7f8bb4">LONGEST STREAK · 12 MONTHS</text>
+          <text x="468" y="334" font-family="{SANS}" font-size="44" font-weight="600" fill="#f3f5ff">{best}<tspan font-size="20" fill="#7f8bb4" font-weight="400"> days</tspan></text>
+          <text x="470" y="384" font-family="{MONO}" font-size="10.5" letter-spacing="1.2" fill="#5f6a92">PUBLIC CONTRIBUTIONS · UPDATED {updated}</text>
+          </g>
+          </svg>'''
+              return svg, cur, best, n_active, updated
+
+          if __name__ == "__main__":
+              try:
+                  data = load()
+              except Exception as e:
+                  sys.exit(f"Could not fetch real contribution data ({e}). Refusing to draw a fake pulse.")
+              if not data:
+                  sys.exit("No contribution data returned. Refusing to draw a fake pulse.")
+              svg, cur, best, n_active, updated = render(data)
+              os.makedirs(os.path.dirname(OUT), exist_ok=True)
+              open(OUT, "w").write(svg)
+              print(f"Build Pulse written: streak={cur} longest={best} active30={n_active} through={updated}")
+          PY
+
+      - name: Commit refreshed SVG (only if it changed)
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/Build-pulse.svg
-          git diff --cached --quiet || git commit -m "chore: refresh Build Pulse"
-          git push
+          if git diff --cached --quiet; then
+            echo "Build Pulse unchanged."
+          else
+            git commit -m "chore: refresh Build Pulse"
+            git pull --rebase --autostash
+            git push
+          fi
