@@ -5,7 +5,6 @@
 <p align="center">
   <a href="mailto:ashmitsingh702@gmail.com"><img src="./assets/Dock-email.svg" alt="Email" width="150"/></a>
   <a href="https://www.linkedin.com/in/ashmitvsingh/"><img src="./assets/Dock-linkedin.svg" alt="LinkedIn" width="150"/></a>
-  <a href="https://ashmit-702.github.io/portfolio/"><img src="./assets/Dock-portfolio.svg" alt="Portfolio" width="150"/></a>
   <a href="https://github.com/Ashmit-702"><img src="./assets/Dock-github.svg" alt="GitHub" width="150"/></a>
 </p>
 
@@ -15,37 +14,24 @@
 
 <br/>
 
-<div align="center"><img src="./assets/Section-featured.svg" alt="01 Special Mention" width="100%"/></div>
-
-<br/>
+## 01 — Selected Work
 
 <div align="center">
-  <a href="https://github.com/Ashmit-702/Gitwicket">
+  <a href="https://gitwicket-ten.vercel.app">
     <img src="./assets/Gitwicket.svg" alt="GitWicket: GitHub activity mapped to cricket stats, LeetCode to a rated card, a Career Card built from GitHub, CV, LeetCode and career goals, and a Compare mode" width="100%"/>
   </a>
 </div>
 
 <br/>
 
-**GitWicket** turns public GitHub activity into a cricket player card.
-
-- **GitHub → cricket stats:** commits become strike rate, pull requests become wickets, stars become boundaries
-- **LeetCode → rated card:** Hard and Medium solved and acceptance rate feed their own stats, and the same signals flow into the Career Card
-- **Career Card:** combines GitHub, CV, LeetCode and career goals into what is strongest, what needs evidence and what to do next
-- **Compare:** two GitHubs, head to head
+GitWicket turns public GitHub activity into a cricket player card: commits become strike rate, pull requests become wickets, stars become boundaries. LeetCode profiles are rated the same way, and the **Career Card** combines GitHub, CV, LeetCode and career goals into an evidence-based profile of what is strongest, what needs evidence and what to do next. **Compare** puts two GitHubs head to head.
 
 <sub>Next.js · TypeScript · Tailwind CSS · GitHub GraphQL · Redis · @vercel/og · Vercel</sub><br/>
-<a href="https://github.com/Ashmit-702/Gitwicket"><b>GitHub ↗</b></a>
+<a href="https://github.com/Ashmit-702/Gitwicket"><b>GitHub ↗</b></a> &nbsp;·&nbsp; <a href="https://gitwicket-ten.vercel.app"><b>Live ↗</b></a>
 
 <br/>
 
-<div align="center"><img src="./assets/Divider.svg" alt="" width="100%"/></div>
-
-<br/>
-
-<div align="center"><img src="./assets/Section-flagship.svg" alt="02 Flagship Projects" width="100%"/></div>
-
-<br/>
+## 02 — Flagship Projects
 
 <table>
 <tr>
@@ -112,9 +98,7 @@
 
 <br/>
 
-<div align="center"><img src="./assets/Section-more.svg" alt="03 More Projects" width="100%"/></div>
-
-<br/>
+## 03 — More Projects
 
 <table>
 <tr>
@@ -153,7 +137,7 @@ Returns a single product pick, with a one-line reason.<br/>
 
 Browser-only password generator, breach checker and encrypted vault.<br/>
 <sub>Next.js · Web Crypto</sub><br/>
-<a href="https://github.com/Ashmit-702/Passwrod-O">GitHub ↗</a>
+<a href="https://github.com/Ashmit-702/Passwrod-O">GitHub ↗</a> &nbsp;·&nbsp; <a href="https://password-phi-ochre.vercel.app">Live ↗</a>
 
 </td>
 </tr>
@@ -162,18 +146,18 @@ Browser-only password generator, breach checker and encrypted vault.<br/>
 
 <a href="https://github.com/Ashmit-702/OIBSIP-f"><img src="./assets/Vitals.svg" alt="Vitals+" width="100%"/></a>
 
-A BMI calculator grown into a health-analytics app with forecasting.<br/>
+A BMI calculator grown into a health and fitness analytics platform with trends and goal tracking.<br/>
 <sub>Python · Flask · Gemini</sub><br/>
-<a href="https://github.com/Ashmit-702/OIBSIP-f">GitHub ↗</a>
+<a href="https://github.com/Ashmit-702/OIBSIP-f">GitHub ↗</a> &nbsp;·&nbsp; <a href="https://oibsip-ys61.vercel.app">Live ↗</a>
 
 </td>
 <td width="50%" valign="top">
 
 <a href="https://github.com/Ashmit-702/Station-Weather"><img src="./assets/Station.svg" alt="Station" width="100%"/></a>
 
-A weather app styled as a physical instrument panel.<br/>
+A live weather app styled as a physical instrument panel.<br/>
 <sub>Flask · Vanilla JS · pytest</sub><br/>
-<a href="https://github.com/Ashmit-702/Station-Weather">GitHub ↗</a>
+<a href="https://github.com/Ashmit-702/Station-Weather">GitHub ↗</a> &nbsp;·&nbsp; <a href="https://station-beryl.vercel.app">Live ↗</a>
 
 </td>
 </tr>
@@ -181,21 +165,17 @@ A weather app styled as a physical instrument panel.<br/>
 
 <br/>
 
-<div align="center"><img src="./assets/Divider.svg" alt="" width="100%"/></div>
-
 ### Other Builds
 
 | Project | Description | Stack | |
 |:--|:--|:--|:--|
 | **LinkedIn CRM** | LinkedIn API research and CRM work from my internship | LinkedIn API | [GitHub ↗](https://github.com/Ashmit-702/Linnkedin-CRM) |
-| **Autonomous AI Creator** | Self-running publishing pipeline from topic discovery to one LLM-selected story | TypeScript · Next.js · Redis | [GitHub ↗](https://github.com/Ashmit-702/Autonomous-ai-creator) |
+| **Autonomous AI Creator** | Self-running publishing pipeline, from topic discovery to one LLM-selected story | TypeScript · Next.js · Redis | [GitHub ↗](https://github.com/Ashmit-702/Autonomous-ai-creator) |
 | **URL Shortener** | Short links with click analytics and SHA-256 hashed IP storage | Node.js · Express · PostgreSQL | [GitHub ↗](https://github.com/Ashmit-702/Urlshortener) |
 
 <br/>
 
-<div align="center"><img src="./assets/Section-process.svg" alt="04 How I Ship" width="100%"/></div>
-
-<br/>
+## 04 — How I Ship
 
 <div align="center">
   <img src="./assets/Pipeline.svg" alt="Pipeline: Research, Design, Build, Integrate, Verify, Ship, with the engineering patterns used at each stage" width="100%"/>
@@ -215,9 +195,7 @@ A weather app styled as a physical instrument panel.<br/>
 
 <br/>
 
-<div align="center"><img src="./assets/Section-stack.svg" alt="05 Tech Stack" width="100%"/></div>
-
-<br/>
+## 05 — Stack
 
 <div align="center">
   <img src="./assets/Stack.svg" alt="Tech stack: Python, JavaScript, TypeScript, C++, Java, SQL; Flask, FastAPI, Node.js, Express, REST APIs, Next.js, Vanilla JS, Tailwind CSS; Groq, Gemini, Ollama, NLP, Scikit-learn, TensorFlow; PostgreSQL, SQLite, Supabase, Redis; Docker, AWS, VPS, Vercel, Render, Git, GitHub, VS Code, Jupyter, Colab" width="100%"/>
@@ -229,13 +207,13 @@ A weather app styled as a physical instrument panel.<br/>
 
 <br/>
 
-<div align="center"><img src="./assets/Section-pulse.svg" alt="06 Build Pulse" width="100%"/></div>
-
-<br/>
+## 06 — Build Pulse
 
 <div align="center">
-  <img src="./assets/Build-pulse.svg" alt="Build Pulse: orbital view of the last 30 days of public contributions, generated from real GitHub data" width="100%"/>
+  <img src="./assets/Build-pulse.svg" alt="Build Pulse: orbital view of the last 30 days of public GitHub contributions, current streak and longest streak" width="100%"/>
 </div>
+
+<sub>Generated from public GitHub contribution data and refreshed every few hours by a GitHub Actions workflow.</sub>
 
 <br/>
 
@@ -244,7 +222,6 @@ A weather app styled as a physical instrument panel.<br/>
 <p align="center">
   <a href="mailto:ashmitsingh702@gmail.com"><img src="./assets/Dock-email.svg" alt="Email" width="118"/></a>
   <a href="https://www.linkedin.com/in/ashmitvsingh/"><img src="./assets/Dock-linkedin.svg" alt="LinkedIn" width="118"/></a>
-  <a href="https://ashmit-702.github.io/portfolio/"><img src="./assets/Dock-portfolio.svg" alt="Portfolio" width="118"/></a>
   <a href="https://github.com/Ashmit-702"><img src="./assets/Dock-github.svg" alt="GitHub" width="118"/></a>
 </p>
 
